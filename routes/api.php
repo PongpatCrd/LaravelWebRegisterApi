@@ -20,7 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::post('register/create_user', [RegisterController::class, 'createUser']);
-
 Route::post('login', [LoginController::class, 'loginUser']);
+
+Route::prefix('register')->group(function () {
+    Route::get('get_register_chart_data', [RegisterController::class, 'getRegisterCountByDate']);
+    Route::get('get_activated_chart_data', [RegisterController::class, 'getActivatedCountByDate']);
+
+    Route::post('create_user', [RegisterController::class, 'createUser']);
+});
